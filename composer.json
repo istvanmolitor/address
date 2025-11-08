@@ -1,0 +1,26 @@
+{
+    "name": "istvanmolitor/address",
+    "description": "Address",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Molitor István",
+            "email": "istvanmolitor@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Molitor\\Address\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Molitor\\Address\\Providers\\AddressServiceProvider"
+            ]
+        }
+    }
+}
