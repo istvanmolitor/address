@@ -33,6 +33,7 @@ class AddressSeeder extends Seeder
         foreach ($countryData as $code => $name) {
             $country = $countryRepository->findOrCreate($code);
             $country->setCurrentCode('hu');
+            $country->is_default = $code === 'hu';
             $country->name = $name;
             $country->save();
         }
