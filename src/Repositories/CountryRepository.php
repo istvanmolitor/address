@@ -35,9 +35,14 @@ class CountryRepository implements CountryRepositoryInterface
         return $this->country->get();
     }
 
+    public function getDefault(): Country|null
+    {
+        return $this->country->where('is_default', 1)->first();
+    }
+
     public function getDefaultId(): int|null
     {
-        return $this->country->where('is_default', 1)->first()?->id;
+        return $this->getDefault()?->id;
     }
 
     public function setDefault(Country $country): void
