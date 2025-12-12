@@ -8,8 +8,10 @@ return [
         'code' => 'Kód',
         'translations' => 'Fordítások',
         'name' => 'Név',
+        'default' => 'Alapértelmezett',
     ],
     'table' => [
+        'default' => 'Alapértelm.',
         'code' => 'Kód',
         'name' => 'Név',
         'updated' => 'Módosítva',

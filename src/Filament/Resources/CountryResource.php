@@ -44,6 +44,9 @@ class CountryResource extends Resource
 
         return $schema
             ->components([
+                Forms\Components\Toggle::make('is_default')
+                    ->label(__('address::country.form.default'))
+                    ->default(false),
                 Forms\Components\TextInput::make('code')
                     ->label(__('address::country.form.code'))
                     ->required()
@@ -62,6 +65,9 @@ class CountryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\IconColumn::make('is_default')
+                    ->boolean()
+                    ->label(__('address::country.table.default')),
                 Tables\Columns\TextColumn::make('code')
                     ->label(__('address::country.table.code'))
                     ->searchable()

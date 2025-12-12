@@ -14,4 +14,6 @@ interface CountryRepositoryInterface
     public function findOrCreate(string $code): Country;
 
     public function getDefaultId(): int|null;
+
+    public function setDefault(Country $country): void;
 }
