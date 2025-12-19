@@ -35,6 +35,11 @@ class CountryRepository implements CountryRepositoryInterface
         return $this->country->get();
     }
 
+    public function getOptions(): array
+    {
+        return $this->country->get()->pluck('name', 'id')->toArray();
+    }
+
     public function getDefault(): Country|null
     {
         return $this->country->where('is_default', 1)->first();
@@ -52,5 +57,10 @@ class CountryRepository implements CountryRepositoryInterface
         $country->save();
 
         $this->country->where('id', '<>', $country->id)->update(['is_default' => false]);
+    }
+
+    public function getById(int $countryId): Country|null
+    {
+        return $this->country->where('id', $countryId)->first();
     }
 }

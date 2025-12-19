@@ -19,4 +19,9 @@ class Country extends TranslatableModel
     {
         return CountryTranslation::class;
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 }

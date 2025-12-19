@@ -32,4 +32,9 @@ class AddressRepository implements AddressRepositoryInterface
         $address->address = $values['address'] ?? '';
         $address->save();
     }
+
+    public function delete(Address $address): bool
+    {
+        return $address->delete();
+    }
 }

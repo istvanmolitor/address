@@ -11,4 +11,6 @@ interface AddressRepositoryInterface
     public function createEmptyId(): int;
 
     public function saveAddress(Address $address, array $values): void;
+
+    public function delete(Address $invoiceAddress): bool;
 }
