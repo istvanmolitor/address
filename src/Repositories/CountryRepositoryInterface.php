@@ -2,8 +2,8 @@
 
 namespace Molitor\Address\Repositories;
 
-use Molitor\Address\Models\Country;
 use Illuminate\Database\Eloquent\Collection;
+use Molitor\Address\Models\Country;
 
 interface CountryRepositoryInterface
 {
@@ -11,13 +11,13 @@ interface CountryRepositoryInterface
 
     public function getOptions(): array;
 
-    public function getByCode(string $code): Country|null;
+    public function getByCode(string $code): ?Country;
 
     public function findOrCreate(string $code): Country;
 
-    public function getDefaultId(): int|null;
+    public function getDefaultId(): ?int;
 
     public function setDefault(Country $country): void;
 
-    public function getById(int $countryId): Country|null;
+    public function getById(int $countryId): ?Country;
 }

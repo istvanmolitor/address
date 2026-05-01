@@ -11,7 +11,7 @@ class CityRepository implements CityRepositoryInterface
 
     public function __construct()
     {
-        $this->city = new City();
+        $this->city = new City;
     }
 
     public function getByZipCode(Country $country, string $zipCode): ?City
@@ -22,13 +22,14 @@ class CityRepository implements CityRepositoryInterface
     public function createCity(Country $country, string $zipCode, string $name): City
     {
         $city = $this->getByZipCode($country, $zipCode);
-        if (!$city) {
-            $city = new City();
+        if (! $city) {
+            $city = new City;
             $city->country_id = $country->id;
             $city->zip_code = $zipCode;
             $city->name = $name;
             $city->save();
         }
+
         return $city;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Molitor\Address\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Molitor\Language\Models\TranslationModel;
 
 class CountryTranslation extends TranslationModel

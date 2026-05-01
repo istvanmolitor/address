@@ -4,7 +4,6 @@ namespace Molitor\Address\database\seeders;
 
 use Illuminate\Database\Seeder;
 use Molitor\Address\Repositories\CityRepositoryInterface;
-use Molitor\Address\Repositories\CountryRepository;
 use Molitor\Address\Repositories\CountryRepositoryInterface;
 use Molitor\User\Exceptions\PermissionException;
 use Molitor\User\Services\AclManagementService;
@@ -26,7 +25,7 @@ class AddressSeeder extends Seeder
             $this->command->error($e->getMessage());
         }
 
-        $countryData = require(__DIR__ . '/data/hu_countries.php');
+        $countryData = require __DIR__.'/data/hu_countries.php';
         /** @var CountryRepositoryInterface $countryRepository */
         $countryRepository = app(CountryRepositoryInterface::class);
 
@@ -40,12 +39,12 @@ class AddressSeeder extends Seeder
 
         $country = $countryRepository->findOrCreate('hu');
 
-        $citiesData = require(__DIR__ . '/data/hu_cities.php');
+        $citiesData = require __DIR__.'/data/hu_cities.php';
         /** @var CityRepositoryInterface $cityRepository */
         $cityRepository = app(CityRepositoryInterface::class);
 
         foreach ($citiesData as $zipCode => $name) {
-            $cityRepository->createCity($country, (string)$zipCode, $name);
+            $cityRepository->createCity($country, (string) $zipCode, $name);
         }
     }
 }

@@ -10,7 +10,7 @@ class AddressRepository implements AddressRepositoryInterface
 
     public function __construct()
     {
-        $this->address = new Address();
+        $this->address = new Address;
     }
 
     public function createEmpty(): Address

@@ -11,10 +11,10 @@ class CountryRepository implements CountryRepositoryInterface
 
     public function __construct()
     {
-        $this->country = new Country();
+        $this->country = new Country;
     }
 
-    public function getByCode(string $code): Country|null
+    public function getByCode(string $code): ?Country
     {
         return $this->country->where('code', $code)->first();
     }
@@ -22,11 +22,12 @@ class CountryRepository implements CountryRepositoryInterface
     public function findOrCreate(string $code): Country
     {
         $country = $this->getByCode($code);
-        if (!$country) {
-            $country = new Country();
+        if (! $country) {
+            $country = new Country;
             $country->code = $code;
             $country->save();
         }
+
         return $country;
     }
 
@@ -40,12 +41,12 @@ class CountryRepository implements CountryRepositoryInterface
         return $this->country->get()->pluck('name', 'id')->toArray();
     }
 
-    public function getDefault(): Country|null
+    public function getDefault(): ?Country
     {
         return $this->country->where('is_default', 1)->first();
     }
 
-    public function getDefaultId(): int|null
+    public function getDefaultId(): ?int
     {
         return $this->getDefault()?->id;
     }
@@ -59,7 +60,7 @@ class CountryRepository implements CountryRepositoryInterface
         $this->country->where('id', '<>', $country->id)->update(['is_default' => false]);
     }
 
-    public function getById(int $countryId): Country|null
+    public function getById(int $countryId): ?Country
     {
         return $this->country->where('id', $countryId)->first();
     }
