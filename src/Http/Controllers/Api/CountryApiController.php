@@ -21,8 +21,9 @@ class CountryApiController extends Controller
         $query = Country::query()->with('translations');
         $this->applyFilters($query, $request);
 
+        $perPage = (int) $request->input('per_page', 10);
         $countries = $query
-            ->paginate(10)
+            ->paginate($perPage)
             ->withQueryString();
 
         return response()->json([
