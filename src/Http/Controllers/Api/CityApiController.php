@@ -15,7 +15,7 @@ class CityApiController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        $query = City::query()->with('country');
+        $query = City::query()->with('country.translations');
         $this->applyFilters($query, $request);
 
         $cities = $query
@@ -45,7 +45,7 @@ class CityApiController extends Controller
 
         $city = City::query()->create($validated);
 
-        $city->load('country');
+        $city->load('country.translations');
 
         return response()->json([
             'data' => new CityResource($city),
@@ -55,7 +55,7 @@ class CityApiController extends Controller
 
     public function show(City $city): JsonResponse
     {
-        $city->load('country');
+        $city->load('country.translations');
 
         return response()->json([
             'data' => new CityResource($city),
@@ -64,7 +64,7 @@ class CityApiController extends Controller
 
     public function edit(City $city): JsonResponse
     {
-        $city->load('country');
+        $city->load('country.translations');
 
         return response()->json([
             'data' => new CityResource($city),
@@ -77,7 +77,7 @@ class CityApiController extends Controller
 
         $city->update($validated);
 
-        $city->load('country');
+        $city->load('country.translations');
 
         return response()->json([
             'data' => new CityResource($city),

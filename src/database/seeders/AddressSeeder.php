@@ -44,7 +44,9 @@ class AddressSeeder extends Seeder
         $cityRepository = app(CityRepositoryInterface::class);
 
         foreach ($citiesData as $zipCode => $name) {
-            $cityRepository->createCity($country, (string) $zipCode, $name);
+            $city = $cityRepository->createCity($country, (string) $zipCode, $name);
+            $city->is_valid = true;
+            $city->save();
         }
     }
 }

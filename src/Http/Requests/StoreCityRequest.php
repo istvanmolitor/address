@@ -17,6 +17,7 @@ class StoreCityRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'is_valid' => ['nullable', 'boolean'],
             'country_id' => ['required', 'integer', 'exists:countries,id'],
             'name' => ['required', 'string', 'max:255'],
             'zip_code' => ['nullable', 'string', 'max:10'],
