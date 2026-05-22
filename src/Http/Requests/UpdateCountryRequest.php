@@ -40,4 +40,3 @@ class UpdateCountryRequest extends FormRequest
         ];
     }
 }
-

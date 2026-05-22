@@ -6,4 +6,3 @@ return [
     'deleted' => 'Az ország sikeresen törölve.',
     'language_missing' => 'Nincs beállított nyelv a fordítás mentéséhez.',
 ];
-

@@ -43,4 +43,3 @@ class CountryResource extends JsonResource
         return $this->translations->first()?->name;
     }
 }
-

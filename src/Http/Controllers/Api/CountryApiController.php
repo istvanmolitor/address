@@ -179,4 +179,3 @@ class CountryApiController extends Controller
             ->update(['is_default' => false]);
     }
 }
-
