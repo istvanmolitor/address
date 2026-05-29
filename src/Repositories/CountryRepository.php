@@ -78,6 +78,11 @@ class CountryRepository implements CountryRepositoryInterface
             ->where('code', (string) config('app.locale'))
             ->value('id');
 
+        // Fallback to any available language if the configured locale doesn't exist
+        if ($languageId === null) {
+            $languageId = Language::query()->value('id');
+        }
+
         CountryTranslation::query()->updateOrCreate(
             ['country_id' => $country->id, 'language_id' => $languageId],
             ['name' => $name],
