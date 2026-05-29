@@ -32,4 +32,16 @@ class CityRepository implements CityRepositoryInterface
 
         return $city;
     }
+
+    public function create(int $countryId, string $name, ?string $zipCode, bool $isValid): City
+    {
+        $city = new City;
+        $city->country_id = $countryId;
+        $city->name = $name;
+        $city->zip_code = $zipCode;
+        $city->is_valid = $isValid;
+        $city->save();
+
+        return $city;
+    }
 }

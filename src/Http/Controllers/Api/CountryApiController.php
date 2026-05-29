@@ -12,10 +12,14 @@ use Molitor\Address\Http\Requests\UpdateCountryRequest;
 use Molitor\Address\Http\Resources\CountryResource;
 use Molitor\Address\Models\Country;
 use Molitor\Address\Models\CountryTranslation;
+use Molitor\Address\Repositories\CountryRepositoryInterface;
 use Molitor\Language\Models\Language;
 
 class CountryApiController extends Controller
 {
+    public function __construct(
+        private CountryRepositoryInterface $countryRepository
+    ) {}
     public function index(Request $request): JsonResponse
     {
         $query = Country::query()->with('translations');
@@ -47,16 +51,11 @@ class CountryApiController extends Controller
     {
         $validated = $request->validated();
 
-        $country = Country::query()->create([
-            'code' => $validated['code'],
-            'is_default' => (bool) ($validated['is_default'] ?? false),
-        ]);
-
-        $this->syncTranslation($country, $validated['name']);
-
-        if ($country->is_default) {
-            $this->clearOtherDefaults($country->id);
-        }
+        $country = $this->countryRepository->create(
+            $validated['code'],
+            $validated['name'],
+            (bool) ($validated['is_default'] ?? false),
+        );
 
         $country->load('translations');
 

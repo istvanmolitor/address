@@ -4,6 +4,8 @@ namespace Molitor\Address\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
 use Molitor\Address\Models\Country;
+use Molitor\Address\Models\CountryTranslation;
+use Molitor\Language\Models\Language;
 
 class CountryRepository implements CountryRepositoryInterface
 {
@@ -63,5 +65,28 @@ class CountryRepository implements CountryRepositoryInterface
     public function getById(int $countryId): ?Country
     {
         return $this->country->where('id', $countryId)->first();
+    }
+
+    public function create(string $code, string $name, bool $isDefault): Country
+    {
+        $country = $this->country->create([
+            'code' => $code,
+            'is_default' => $isDefault,
+        ]);
+
+        $languageId = Language::query()
+            ->where('code', (string) config('app.locale'))
+            ->value('id');
+
+        CountryTranslation::query()->updateOrCreate(
+            ['country_id' => $country->id, 'language_id' => $languageId],
+            ['name' => $name],
+        );
+
+        if ($isDefault) {
+            $this->country->where('id', '<>', $country->id)->update(['is_default' => false]);
+        }
+
+        return $country;
     }
 }

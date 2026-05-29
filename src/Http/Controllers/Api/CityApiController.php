@@ -9,10 +9,13 @@ use Illuminate\Routing\Controller;
 use Molitor\Address\Http\Requests\StoreCityRequest;
 use Molitor\Address\Http\Requests\UpdateCityRequest;
 use Molitor\Address\Http\Resources\CityResource;
-use Molitor\Address\Models\City;
+use Molitor\Address\Repositories\CityRepositoryInterface;
 
 class CityApiController extends Controller
 {
+    public function __construct(
+        private CityRepositoryInterface $cityRepository
+    ) {}
     public function index(Request $request): JsonResponse
     {
         $query = City::query()->with('country.translations');
@@ -43,7 +46,12 @@ class CityApiController extends Controller
     {
         $validated = $request->validated();
 
-        $city = City::query()->create($validated);
+        $city = $this->cityRepository->create(
+            (int) $validated['country_id'],
+            $validated['name'],
+            $validated['zip_code'] ?? null,
+            (bool) ($validated['is_valid'] ?? true),
+        );
 
         $city->load('country.translations');
 

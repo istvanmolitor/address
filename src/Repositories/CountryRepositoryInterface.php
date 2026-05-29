@@ -20,4 +20,6 @@ interface CountryRepositoryInterface
     public function setDefault(Country $country): void;
 
     public function getById(int $countryId): ?Country;
+
+    public function create(string $code, string $name, bool $isDefault): Country;
 }
