@@ -21,6 +21,7 @@ class AddressSeeder extends Seeder
             /** @var AclManagementService $aclService */
             $aclService = app(AclManagementService::class);
             $aclService->createPermission('country', 'Országok szerkesztése', 'admin');
+            $aclService->createPermission('city', 'Városok szerkesztése', 'admin');
         } catch (PermissionException $e) {
             $this->command->error($e->getMessage());
         }

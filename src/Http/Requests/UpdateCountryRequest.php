@@ -3,6 +3,7 @@
 namespace Molitor\Address\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Molitor\Address\Models\Country;
 
@@ -10,7 +11,7 @@ class UpdateCountryRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Gate::allows('acl', 'country');
     }
 
     /**
