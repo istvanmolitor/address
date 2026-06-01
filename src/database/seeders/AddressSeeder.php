@@ -17,11 +17,12 @@ class AddressSeeder extends Seeder
      */
     public function run()
     {
+        $permissionGroupName = 'Cím';
         try {
             /** @var AclManagementService $aclService */
             $aclService = app(AclManagementService::class);
-            $aclService->createPermission('country', 'Országok szerkesztése', 'admin');
-            $aclService->createPermission('city', 'Városok szerkesztése', 'admin');
+            $aclService->createPermission('country', 'Országok szerkesztése', 'admin', $permissionGroupName);
+            $aclService->createPermission('city', 'Városok szerkesztése', 'admin', $permissionGroupName);
         } catch (PermissionException $e) {
             $this->command->error($e->getMessage());
         }
