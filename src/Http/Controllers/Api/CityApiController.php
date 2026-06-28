@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller;
 use Molitor\Address\Http\Requests\StoreCityRequest;
 use Molitor\Address\Http\Requests\UpdateCityRequest;
 use Molitor\Address\Http\Resources\CityResource;
+use Molitor\Address\Models\City;
 use Molitor\Address\Repositories\CityRepositoryInterface;
 
 class CityApiController extends Controller
@@ -34,6 +35,11 @@ class CityApiController extends Controller
                 'total' => $cities->total(),
             ],
             'filters' => $request->only(['search', 'sort', 'direction']),
+            'columns' => [
+                ['key' => 'country', 'label' => 'Ország', 'sortable' => false],
+                ['key' => 'name', 'label' => 'Város', 'sortable' => true],
+                ['key' => 'zip_code', 'label' => 'Irányítószám', 'sortable' => true],
+            ],
         ]);
     }
 

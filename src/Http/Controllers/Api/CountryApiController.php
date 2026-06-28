@@ -39,6 +39,11 @@ class CountryApiController extends Controller
                 'total' => $countries->total(),
             ],
             'filters' => $request->only(['search', 'sort', 'direction']),
+            'columns' => [
+                ['key' => 'name', 'label' => 'Név', 'sortable' => false],
+                ['key' => 'code', 'label' => 'Kód', 'sortable' => true],
+                ['key' => 'is_default', 'label' => 'Alapértelmezett', 'sortable' => true],
+            ],
         ]);
     }
 
