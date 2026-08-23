@@ -1,11 +1,12 @@
 # Address modul
 
-Egyszerű címkezelő csomag Laravel projektekhez: országok, városok és cím rekordok, Filament integrációval és seederekkel.
+Egyszerű címkezelő csomag Laravel projektekhez: országok, városok és cím rekordok, REST API kontrollerekkel és seederekkel.
 
 ## Előfeltételek
 
 - Laravel alkalmazás
-- Opcionális: Filament admin felület (ha a beépített erőforrásokat és űrlap komponenst szeretnéd használni)
+- `istvanmolitor/user` (composer `require`)
+- `istvanmolitor/language` – nincs a composer.json `require`-jában, de a `CountryApiController` a `Molitor\Language\Models\Language` modellt használja az országnevek fordításához, ezért gyakorlatban ez is szükséges
 
 ## Telepítés
 
@@ -49,25 +50,28 @@ php artisan db:seed --class=Molitor\\Address\\database\\seeders\\AddressSeeder
 
 Megjegyzés: A seeder a Molitor User/ACL szolgáltatásait használja a jogosultság létrehozásához, és a Language modul fordítási funkcióira támaszkodik az ország nevekhez.
 
-## Filament integráció
+## Admin API
 
-- Erőforrás: CountryResource – országok listázása és szerkesztése a Filament adminban.
-- Űrlap komponens: Address – újrahasznosítható címblokk Filament űrlapokhoz (név, ország, irányítószám, város, cím).
+A csomag nem Filament-et használ, hanem sima REST API kontrollereket ad az admin felülethez:
 
-Jogosultság ellenőrzés:
+- `Molitor\Address\Http\Controllers\Api\CountryApiController` – országok CRUD-ja, fordítással
+- `Molitor\Address\Http\Controllers\Api\CityApiController` – városok CRUD-ja
+
+Route-ok (`src/routes/api.php`), `auth:sanctum` és `permission:country` middleware-rel védve:
+
+```php
+Route::prefix('admin/address')
+    ->middleware(['api', 'auth:sanctum', 'permission:country'])
+    ->name('address.')
+    ->group(function (): void {
+        Route::resource('countries', CountryApiController::class);
+        Route::resource('cities', CityApiController::class);
+    });
+```
+
+Jogosultság ellenőrzés máshol (pl. menüben):
 ```php
 Gate::allows('acl', 'country')
-```
-Biztosítsd, hogy a felhasználó rendelkezzen a megfelelő „country” jogosultsággal, különben a navigáció nem jelenik meg.
-
-Példa – Address komponens használata Filament formban:
-```php
-use Molitor\Address\Filament\Components\Address as AddressComponent;
-
-// ... a Filament Resource form() metódusában
-return $schema->components([
-    AddressComponent::make('billing_address', 'Számlázási cím')
-]);
 ```
 
 ## Repozitóriumok és használati példák

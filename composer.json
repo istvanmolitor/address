@@ -1,6 +1,6 @@
 {
     "name": "istvanmolitor/address",
-    "description": "Address",
+    "description": "Country, city, and address management with Hungarian seed data and a REST API for the Molitor package suite.",
     "type": "library",
     "license": "MIT",
     "authors": [
